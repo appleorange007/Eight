@@ -1,7 +1,5 @@
 package eight;
 
-import java.util.List;
-
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 
@@ -9,12 +7,20 @@ public class Message {
     private int serial;
     private Action action;
     private int pos;
-    private List<Card> cards;
+    private int[] cardNumbers;
 
     private boolean includeServer;
 
     public int getSerial() {
         return serial;
+    }
+
+    public int[] getCardNumbers() {
+        return cardNumbers;
+    }
+
+    public void setCardNumbers(int[] cardNumbers) {
+        this.cardNumbers = cardNumbers;
     }
 
     public void setSerial(int serial) {
@@ -35,14 +41,6 @@ public class Message {
 
     public void setPos(int pos) {
         this.pos = pos;
-    }
-
-    public List<Card> getCards() {
-        return cards;
-    }
-
-    public void setCards(List<Card> cards) {
-        this.cards = cards;
     }
 
     public boolean isIncludeServer() {

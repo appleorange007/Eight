@@ -15,9 +15,9 @@ import com.rabbitmq.client.ShutdownSignalException;
 public class ListenThread implements Runnable {
     private final String EXCHANGE_REC = "tableR";
     private final String EXCHANGE_SEND = "tableS";
-    private MainInterface main;
-    Image cardsPic;
-    Graphics g;
+    private MainInterface main = null;
+    Image cardsPic = null;
+    Graphics g = null;
 
     ListenThread(MainInterface mainI, Image cardsPic, Graphics g) {
         this.main = mainI;
