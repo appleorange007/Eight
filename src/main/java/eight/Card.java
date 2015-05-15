@@ -51,8 +51,7 @@ public class Card
     MainInterface main;
     Graphics g;
 
-    public Card(int cardNumber, Image cardspic, MainInterface mi, Graphics g)
-    {
+    public Card(int cardNumber, Image cardspic, MainInterface mi, Graphics g) {
         this.cardNumber = cardNumber;
         this.main = mi;
         this.g = g;
@@ -70,7 +69,7 @@ public class Card
         g.drawImage(cardPic, (int) p.getX(), (int) p.getY(), main);
     }
 
-    public void drawCard2(int x, int y)
+    public void drawCard(int x, int y)
     {
         g.drawImage(cardPic, x, y, main);
     }
@@ -80,7 +79,7 @@ public class Card
         g.drawImage(cardSideWays, (int) p.getX(), (int) p.getY(), main);
     }
 
-    public void drawSideWays2(int x, int y)
+    public void drawSideWays(int x, int y)
     {
         g.drawImage(cardSideWays, x, y, main);
     }

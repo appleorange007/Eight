@@ -14,6 +14,8 @@ public class Dealer {
     private Image cardspic;
     private Graphics g;
 
+    private Player[] plays = new Player[4];
+
     public void setSerial(int serial) {
         this.serial = serial;
     }
@@ -70,26 +72,24 @@ public class Dealer {
         for (int i = 0; i < cardNumbers.length; i++) {
             cards[i] = new Card(cardNumbers[i], cardspic, main, g);
         }
-        int pos = main.getTablePos();
-        String cardStr = "";
-        if (0 == pos) {
-            for (int i = 0; i < initPlayCardCnt + 1; i++) {
-                cardStr = cardStr + cards[i].cardNumber + " ";
+
+        int cardNum = 0;
+        for (int i = 0; i < 4; i++) {
+            plays[i] = new Player(cardspic, main, g);
+
+            for (int cardCnt = 0; cardCnt < initPlayCardCnt; cardCnt++) {
+                plays[i].addHandCard(cards[cardNum++]);
             }
-        } else if (1 == pos) {
-            for (int i = initPlayCardCnt + 1; i < initPlayCardCnt * 2 + 1; i++) {
-                cardStr = cardStr + cards[i].cardNumber + " ";
+
+            if (0 == i) {
+                plays[i].addHandCard(cards[cardNum++]);
             }
-        } else if (2 == pos) {
-            for (int i = initPlayCardCnt * 2 + 1; i < initPlayCardCnt * 3 + 1; i++) {
-                cardStr = cardStr + cards[i].cardNumber + " ";
-            }
-        } else {
-            for (int i = initPlayCardCnt * 3 + 1; i < initPlayCardCnt * 4 + 1; i++) {
-                cardStr = cardStr + cards[i].cardNumber + " ";
-            }
+
+            main.addMsg(plays[i].displayAllHandCardStr());
+            plays[i].displayTable();
+
         }
-        main.addMsg(cardStr);
+
     }
 
     private void shuffle() {

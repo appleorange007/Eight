@@ -312,4 +312,14 @@ public class MainInterface extends JFrame implements ActionListener, MouseMotion
             input.setText("");
         }
     }
+
+    public void repaint()
+    {
+        // if(screenSize.width < 1024){
+        // offscreen2 = offscreen.getScaledInstance(338, 413, Image.SCALE_FAST);
+        // imageI.setImage(offscreen2);
+        // }
+        panel.repaint();
+        // panel.update();
+    }
 }
