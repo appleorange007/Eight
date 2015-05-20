@@ -7,7 +7,11 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
 public class Player {
+    private static final Logger logger = LoggerFactory.getLogger(MainInterface.class);
     private List<Card> handCards;
     private List<Card[]> frontCards;
     private List<Card> abandonCards;
@@ -48,8 +52,9 @@ public class Player {
 
         g.drawRoundRect(355, 360, 90, 40, 15, 15);
 
+        logger.info("display Card 0 " );
         handCards.get(0).drawCard(100, 100);
-
+        
         main.repaint();
     }
 

@@ -31,13 +31,14 @@ import javax.swing.JTextArea;
 import javax.swing.JTextField;
 import javax.swing.SwingConstants;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
 public class MainInterface extends JFrame implements ActionListener, MouseMotionListener,
         MouseListener, WindowListener {
 
-    /**
-     * 
-     */
     private static final long serialVersionUID = 1L;
+    private static final Logger logger = LoggerFactory.getLogger(MainInterface.class);
     BufferedImage offscreen;
     Image title;
     Image cardsPic;
@@ -162,12 +163,9 @@ public class MainInterface extends JFrame implements ActionListener, MouseMotion
         try {
             Rectangle current = msg.getVisibleRect();
             int scrollunitinc = msg.getScrollableUnitIncrement(current, SwingConstants.VERTICAL, 1);
-            // System.out.println("scrollunitinc " + scrollunitinc + " Y " + current.getY());
-            // current.setRect(current.getX(), current.getY() + scrollunitinc, current.getWidth(),
-            // current.getHeight());
+
             current.setRect(current.getX(), (msg.getLineCount() + 1) * scrollunitinc,
                     current.getWidth(), current.getHeight());
-            // System.out.println("Y " + current.getY());
             msg.scrollRectToVisible(current);
         } catch (Exception ex) {
             System.out.println("\n Error scrolling to end " + ex);
@@ -186,7 +184,7 @@ public class MainInterface extends JFrame implements ActionListener, MouseMotion
             usage();
             return;
         }
-
+        logger.info("start");
         int pos = Integer.parseInt(args[0]);
 
         try {
