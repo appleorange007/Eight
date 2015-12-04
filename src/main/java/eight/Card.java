@@ -38,7 +38,7 @@ public class Card
             new Point(181, 328), new Point(139, 328), new Point(97, 328), // xing,qian,hong
 
             new Point(24, 77), new Point(66, 77), new Point(107, 76), new Point(149, 76),
-            new Point(191, 77) // cai, xi,shou,lu,fu
+            new Point(191, 77) // cai,xi,shou,lu,fu
     };
 
     // Reference at bottom of class

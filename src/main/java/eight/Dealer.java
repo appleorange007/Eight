@@ -4,17 +4,19 @@ import java.awt.Graphics;
 import java.awt.Image;
 
 public class Dealer {
-
-    private int[] cardNumbers = new int[124];
-    private Card[] cards = new Card[124];
-    private final int initPlayCardCnt = 25;
+    private final int ALL_CARD_COUNT = 124;
+    private final int PLAY_CARD_COUNT = 25;
+    private final int PLAY_COUNT = 4;
+    private int[] cardNumbers = new int[ALL_CARD_COUNT];
+    private Card[] cards = new Card[ALL_CARD_COUNT];
+    private final int initPlayCardCnt = PLAY_CARD_COUNT;
     private int started = 0;
     private int serial = 0;
     private MainInterface main;
     private Image cardspic;
     private Graphics g;
 
-    private Player[] plays = new Player[4];
+    private Player[] plays = new Player[PLAY_COUNT];
 
     public void setSerial(int serial) {
         this.serial = serial;
@@ -32,12 +34,12 @@ public class Dealer {
         if (msg.getSerial() < 0) {
             return;
         }
-
+        System.out.println("dealMessage: serial = " + msg.getSerial());
         this.setSerial(msg.getSerial() + 1);
         switch (msg.getAction()) {
         case GAMESTARTING:
             started++;
-            if (4 == started) {
+            if (PLAY_COUNT == started) {
                 gameStart();
             }
             break;
@@ -48,7 +50,6 @@ public class Dealer {
             break;
 
         }
-
     }
 
     private void gameStart() {
@@ -69,12 +70,12 @@ public class Dealer {
 
     private void dealInitCard(Message msg) {
 
-        for (int i = 0; i < cardNumbers.length; i++) {
-            cards[i] = new Card(cardNumbers[i], cardspic, main, g);
+        for (int i = 0; i < msg.getCardNumbers().length; i++) {
+            cards[i] = new Card(msg.getCardNumbers()[i], cardspic, main, g);
         }
 
         int cardNum = 0;
-        for (int i = 0; i < 4; i++) {
+        for (int i = 0; i < PLAY_COUNT; i++) {
             plays[i] = new Player(cardspic, main, g);
 
             for (int cardCnt = 0; cardCnt < initPlayCardCnt; cardCnt++) {
@@ -87,7 +88,6 @@ public class Dealer {
 
             main.addMsg(plays[i].displayAllHandCardStr());
             plays[i].displayTable();
-
         }
 
     }

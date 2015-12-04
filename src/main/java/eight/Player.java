@@ -45,16 +45,11 @@ public class Player {
         g.setColor(Color.red);
         g.drawRoundRect(355, 5, 90, 40, 15, 15);
         g.setColor(Color.white);
-
         g.drawRoundRect(5, 360, 90, 40, 15, 15);
-
         g.drawRoundRect(5, 5, 90, 40, 15, 15);
-
         g.drawRoundRect(355, 360, 90, 40, 15, 15);
-
-        logger.info("display Card 0 " );
+        logger.info("display Card 0 ");
         handCards.get(0).drawCard(100, 100);
-        
         main.repaint();
     }
 

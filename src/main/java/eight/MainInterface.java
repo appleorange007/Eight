@@ -85,15 +85,11 @@ public class MainInterface extends JFrame implements ActionListener, MouseMotion
         g = offscreen.getGraphics();
 
         g.drawImage(title, 30, 120, this);
-
         g.setColor(Color.red);
-
         g.drawLine(0, 450, 450, 450);
-
         screenSize = toolkit.getScreenSize();
 
         imageI = new ImageIcon(offscreen);
-
         image = new JLabel(imageI);
 
         addMouseMotionListener(this);
@@ -173,20 +169,10 @@ public class MainInterface extends JFrame implements ActionListener, MouseMotion
 
     }
 
-    private static void usage() {
-        System.out.println("$0 0/1/2/3");
-
-    }
-
     public static void main(String[] args) {
 
-        if (args.length == 0) {
-            usage();
-            return;
-        }
-        logger.info("start");
-        int pos = Integer.parseInt(args[0]);
-
+        int pos = Position.getInstance().getAvaiablePos();
+        logger.info("start pos=" + pos);
         try {
             MainInterface frame = new MainInterface();
             // frame.setTitle("Eight");
@@ -194,7 +180,7 @@ public class MainInterface extends JFrame implements ActionListener, MouseMotion
 
             frame.pack();
             frame.setVisible(true);
-            frame.setTablePos(pos);
+            frame.setTablePos(pos % 4);
 
         } catch (Exception e) {
             System.out.println("System Error: " + e);
@@ -272,13 +258,19 @@ public class MainInterface extends JFrame implements ActionListener, MouseMotion
     }
 
     public void actionPerformed(ActionEvent event) {
+
+        if (null == actionHolder) {
+            actionHolder = SendMessage.getInstance();
+            actionHolder.setTablePos(tablePos);
+        }
+
         String label = event.getActionCommand();
         if (label.equals("Quit")) {
             actionHolder.setRunning(false);
         } else if (label.equals("Start Game")) {
 
             if (null == listenThread) {
-                ListenThread listenThread = new ListenThread(this, cardsPic, g);
+                listenThread = new ListenThread(this, cardsPic, g);
                 Thread t = new Thread(listenThread);
                 t.start();
                 try {
@@ -290,12 +282,6 @@ public class MainInterface extends JFrame implements ActionListener, MouseMotion
             }
             System.out.println("actionPerform:");
             this.addMsg("actionPerform:" + tablePos);
-            if (null == actionHolder) {
-
-                actionHolder = SendMessage.getInstance();
-                actionHolder.setTablePos(tablePos);
-                // actionHolder.runAction();
-            }
 
             Message message = new Message();
             message.setSerial(0);

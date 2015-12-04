@@ -27,6 +27,11 @@ public class Message {
         this.serial = serial;
     }
 
+    public int incSerial() {
+        this.serial++;
+        return this.serial;
+    }
+
     public Action getAction() {
         return action;
     }
