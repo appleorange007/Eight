@@ -56,7 +56,8 @@ public class MainInterface extends JFrame implements ActionListener, MouseMotion
 
     int tablePos;
     SendMessage actionHolder;
-    ListenThread listenThread;
+    ReceiveMessage listenThread;
+    private final static int PLAY_COUNT = 2;
 
     public int getTablePos() {
         return tablePos;
@@ -180,7 +181,7 @@ public class MainInterface extends JFrame implements ActionListener, MouseMotion
 
             frame.pack();
             frame.setVisible(true);
-            frame.setTablePos(pos % 4);
+            frame.setTablePos(pos % PLAY_COUNT);
 
         } catch (Exception e) {
             System.out.println("System Error: " + e);
@@ -259,18 +260,25 @@ public class MainInterface extends JFrame implements ActionListener, MouseMotion
 
     public void actionPerformed(ActionEvent event) {
 
-        if (null == actionHolder) {
-            actionHolder = SendMessage.getInstance();
-            actionHolder.setTablePos(tablePos);
-        }
-
         String label = event.getActionCommand();
         if (label.equals("Quit")) {
-            actionHolder.setRunning(false);
+            System.out.println("actionPerform: Quit!!");
+            this.addMsg("actionPerform:" + tablePos);
+
+            Message message = new Message();
+            message.setSerial(0);
+            message.setAction(Action.GAMEOVER);
+            message.setIncludeServer(false);
+            message.setPos(tablePos);
+            actionHolder.pushAction(message);
         } else if (label.equals("Start Game")) {
+            if (null == actionHolder) {
+                actionHolder = SendMessage.getInstance();
+                actionHolder.setTablePos(tablePos);
+            }
 
             if (null == listenThread) {
-                listenThread = new ListenThread(this, cardsPic, g);
+                listenThread = new ReceiveMessage(this, cardsPic, g);
                 Thread t = new Thread(listenThread);
                 t.start();
                 try {
@@ -280,7 +288,7 @@ public class MainInterface extends JFrame implements ActionListener, MouseMotion
                     e.printStackTrace();
                 }
             }
-            System.out.println("actionPerform:");
+            System.out.println("actionPerform: start!!");
             this.addMsg("actionPerform:" + tablePos);
 
             Message message = new Message();

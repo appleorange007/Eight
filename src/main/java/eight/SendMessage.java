@@ -2,6 +2,9 @@ package eight;
 
 import java.io.IOException;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
 import com.rabbitmq.client.Channel;
 import com.rabbitmq.client.Connection;
 import com.rabbitmq.client.ConnectionFactory;
@@ -14,12 +17,13 @@ public class SendMessage {
 
     private Message message;
 
-    private boolean running;
-    private int tablePos;
+    private boolean running = false;
+    private int tablePos = -1;
     String exchangeName;
     Connection connection;
     Channel channelR;
     Channel channelS;
+    private static final Logger logger = LoggerFactory.getLogger(SendMessage.class);
 
     private static SendMessage single = null;
 
@@ -61,11 +65,11 @@ public class SendMessage {
         return running;
     }
 
-    public void setRunning(boolean end) {
-        this.running = end;
+    public void setEnd() {
+        this.running = false;
     }
 
-    public void runAction() {
+    private void runAction() {
         if (isRunning()) {
             return;
         }
@@ -83,6 +87,7 @@ public class SendMessage {
                     channelR.close();
                     channelS.close();
                     connection.close();
+                    System.out.println("SendMessage connection closed.");
                 } catch (IOException e) {
                     // TODO Auto-generated catch block
                     e.printStackTrace();
@@ -102,16 +107,16 @@ public class SendMessage {
 
     public synchronized void popAction() throws IOException {
 
-        if (!message.isValid())
-        {
-
+        if (!message.isValid()) {
             try {
                 wait();
-
             } catch (InterruptedException e) {
                 e.printStackTrace();
             }
+        }
 
+        if (message.getAction() == Action.GAMEOVER) {
+            running = false;
         }
 
         // do with message

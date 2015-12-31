@@ -6,7 +6,7 @@ import java.awt.Image;
 public class Dealer {
     private final int ALL_CARD_COUNT = 124;
     private final int PLAY_CARD_COUNT = 25;
-    private final int PLAY_COUNT = 4;
+    private final int PLAY_COUNT = 2; // 4, for debug to 1
     private int[] cardNumbers = new int[ALL_CARD_COUNT];
     private Card[] cards = new Card[ALL_CARD_COUNT];
     private final int initPlayCardCnt = PLAY_CARD_COUNT;
@@ -46,6 +46,9 @@ public class Dealer {
         case CARDINIT:
             dealInitCard(msg);
             break;
+        case GAMEOVER:
+            gameOver();
+            break;
         default:
             break;
 
@@ -56,6 +59,10 @@ public class Dealer {
         initCard();
         shuffle();
         SendInitcard();
+    }
+
+    private void gameOver() {
+        this.main.listenThread.setEnd();
     }
 
     private void SendInitcard() {

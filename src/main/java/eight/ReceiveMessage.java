@@ -12,17 +12,22 @@ import com.rabbitmq.client.ConsumerCancelledException;
 import com.rabbitmq.client.QueueingConsumer;
 import com.rabbitmq.client.ShutdownSignalException;
 
-public class ListenThread implements Runnable {
+public class ReceiveMessage implements Runnable {
     private final String EXCHANGE_REC = "tableR";
     private final String EXCHANGE_SEND = "tableS";
     private MainInterface main = null;
     Image cardsPic = null;
     Graphics g = null;
+    boolean running = false;
 
-    ListenThread(MainInterface mainI, Image cardsPic, Graphics g) {
+    ReceiveMessage(MainInterface mainI, Image cardsPic, Graphics g) {
         this.main = mainI;
         this.cardsPic = cardsPic;
         this.g = g;
+    }
+
+    public void setEnd() {
+        this.running = false;
     }
 
     public void run() {
@@ -51,13 +56,16 @@ public class ListenThread implements Runnable {
             channel.basicConsume(queueName, true, consumer);
             Gson gson = new Gson();
             Dealer deal = new Dealer(main, cardsPic, g);
-            while (true) {
+            running = true;
+            while (running) {
                 QueueingConsumer.Delivery delivery = consumer.nextDelivery();
                 String body = new String(delivery.getBody());
                 Message msg = gson.fromJson(body, Message.class);
                 // To handle message.
                 deal.dealMessage(msg);
             }
+            channel.close();
+            connection.close();
         } catch (IOException e) {
             // TODO Auto-generated catch block
             e.printStackTrace();
@@ -71,7 +79,7 @@ public class ListenThread implements Runnable {
             // TODO Auto-generated catch block
             e.printStackTrace();
         }
-
+        System.out.println("ReceiveMessage connection closed.");
     }
 
     private boolean isBanker() {
