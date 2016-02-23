@@ -16,8 +16,7 @@ import java.awt.image.BufferedImage;
  * 
  * 
  */
-public class Card
-{
+public class Card implements Comparable<Card> {
     private final static int WIDTH = 41;
     private final static int HEIGHT = 193;
 
@@ -142,5 +141,14 @@ public class Card
             value = "fu";
         }
         return value;
+    }
+
+    public int compareTo(Card another) {
+        if (this.cardNumber > another.cardNumber) {
+            return 1;
+        } else if (this.cardNumber < another.cardNumber) {
+            return -1;
+        }
+        return 0;
     }
 }

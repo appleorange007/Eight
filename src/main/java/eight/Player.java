@@ -3,38 +3,36 @@ package eight;
 import java.awt.Color;
 import java.awt.Graphics;
 import java.awt.Image;
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.List;
+import java.awt.Rectangle;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 public class Player {
     private static final Logger logger = LoggerFactory.getLogger(MainInterface.class);
-    private List<Card> handCards;
-    private List<Card[]> frontCards;
-    private List<Card> abandonCards;
+
     Image cardspic;
     MainInterface main;
     Graphics g;
+    Hand hand;
 
-    Player(Image cardspic, MainInterface mi, Graphics g) {
+    // click detection box for cards in hand
+    Rectangle cardBox[];
+
+    Player(MainInterface mi, Image cardspic, Graphics g) {
         this.cardspic = cardspic;
         this.main = mi;
         this.g = g;
-
+        this.hand = mi.getMyHand();
     }
 
     public void initHandCard(Card[] cards) {
-        handCards = Arrays.asList(cards);
+        hand.initCard(cards);
     }
 
     public void addHandCard(Card card) {
-        if (null == handCards) {
-            handCards = new ArrayList<Card>();
-        }
-        handCards.add(card);
+        hand.addCard(card);
+
     }
 
     public void displayTable() {
@@ -49,16 +47,12 @@ public class Player {
         g.drawRoundRect(5, 5, 90, 40, 15, 15);
         g.drawRoundRect(355, 360, 90, 40, 15, 15);
         logger.info("display table 0 ");
-        handCards.get(0).drawCard(100, 100);
+        hand.showHand();
         main.repaint();
     }
 
-    public String displayAllHandCardStr() {
-        String cardStr = "";
-        for (Card card : handCards) {
-            cardStr = cardStr + card.getNumber() + " ";
-        }
-        return cardStr;
+    public void cardSelection(int selection) {
+
     }
 
 }

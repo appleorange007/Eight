@@ -57,7 +57,13 @@ public class MainInterface extends JFrame implements ActionListener, MouseMotion
     int tablePos;
     SendMessage actionHolder;
     ReceiveMessage listenThread;
-    private final static int PLAY_COUNT = 2;
+
+    private boolean myTurn = false;
+    private Hand hand;
+    private Player player;
+
+    int mouseX;
+    int mouseY;
 
     public int getTablePos() {
         return tablePos;
@@ -65,6 +71,14 @@ public class MainInterface extends JFrame implements ActionListener, MouseMotion
 
     public void setTablePos(int tablePos) {
         this.tablePos = tablePos;
+    }
+
+    public Player getMyPlayer() {
+        return player;
+    }
+
+    public Hand getMyHand() {
+        return hand;
     }
 
     MainInterface() {
@@ -176,12 +190,12 @@ public class MainInterface extends JFrame implements ActionListener, MouseMotion
         logger.info("start pos=" + pos);
         try {
             MainInterface frame = new MainInterface();
-            // frame.setTitle("Eight");
+            frame.setTitle("Eight");
             frame.setResizable(false);
 
             frame.pack();
             frame.setVisible(true);
-            frame.setTablePos(pos % PLAY_COUNT);
+            frame.setTablePos(pos % Constant.PLAY_COUNT);
 
         } catch (Exception e) {
             System.out.println("System Error: " + e);
@@ -238,9 +252,15 @@ public class MainInterface extends JFrame implements ActionListener, MouseMotion
 
     }
 
-    public void mousePressed(MouseEvent arg0) {
-        // TODO Auto-generated method stub
+    public void mousePressed(MouseEvent me) {
+        if (myTurn) {
+            int selection = hand.mouseClick(mouseX, mouseY);
+            // if (dealer != null && selection != -1)
+            // dealer.cardSelection(selection);
 
+            if (player != null && selection != -1)
+                player.cardSelection(selection);
+        }
     }
 
     public void mouseReleased(MouseEvent arg0) {
@@ -253,8 +273,16 @@ public class MainInterface extends JFrame implements ActionListener, MouseMotion
 
     }
 
-    public void mouseMoved(MouseEvent arg0) {
+    public void mouseMoved(MouseEvent me) {
         // TODO Auto-generated method stub
+        // ajusting so mouse points are over image
+        mouseX = me.getX() - 5;
+        mouseY = me.getY() - 45;
+        if (screenSize.width < 1024) {// scaling mouse movement if screen to big
+            mouseX = mouseX * 100 / 75;
+            mouseY = mouseY * 100 / 75;
+        }
+        // addMsg("X: " + mouseX + " Y: " + mouseY);
 
     }
 
@@ -288,6 +316,10 @@ public class MainInterface extends JFrame implements ActionListener, MouseMotion
                     e.printStackTrace();
                 }
             }
+
+            hand = new Hand(this, cardsPic, g);
+            player = new Player(this, cardsPic, g);
+
             System.out.println("actionPerform: start!!");
             this.addMsg("actionPerform:" + tablePos);
 

@@ -2,21 +2,19 @@ package eight;
 
 import java.awt.Graphics;
 import java.awt.Image;
+import java.util.Arrays;
+import java.util.List;
 
 public class Dealer {
-    private final int ALL_CARD_COUNT = 124;
-    private final int PLAY_CARD_COUNT = 25;
-    private final int PLAY_COUNT = 2; // 4, for debug to 1
-    private int[] cardNumbers = new int[ALL_CARD_COUNT];
-    private Card[] cards = new Card[ALL_CARD_COUNT];
-    private final int initPlayCardCnt = PLAY_CARD_COUNT;
+
+    private int[] cardNumbers = new int[Constant.ALL_CARD_COUNT];
+    private Card[] cards = new Card[Constant.ALL_CARD_COUNT];
+    private final int initPlayCardCnt = Constant.PLAY_CARD_COUNT;
     private int started = 0;
     private int serial = 0;
     private MainInterface main;
     private Image cardspic;
     private Graphics g;
-
-    private Player[] plays = new Player[PLAY_COUNT];
 
     public void setSerial(int serial) {
         this.serial = serial;
@@ -39,7 +37,7 @@ public class Dealer {
         switch (msg.getAction()) {
         case GAMESTARTING:
             started++;
-            if (PLAY_COUNT == started) {
+            if (Constant.PLAY_COUNT == started) {
                 gameStart();
             }
             break;
@@ -82,21 +80,20 @@ public class Dealer {
         }
 
         int cardNum = 0;
-        for (int i = 0; i < PLAY_COUNT; i++) {
-            plays[i] = new Player(cardspic, main, g);
+        for (int i = 0; i < Constant.PLAY_COUNT; i++) {
+            int myCardCount = (i == 0) ? initPlayCardCnt + 1 : initPlayCardCnt;
 
-            for (int cardCnt = 0; cardCnt < initPlayCardCnt; cardCnt++) {
-                plays[i].addHandCard(cards[cardNum++]);
+            if (main.getTablePos() % Constant.PLAY_COUNT == i) {
+                List<Card> cardList = Arrays.asList(cards);
+                List<Card> myCardList = cardList.subList(cardNum, cardNum + myCardCount);
+                main.getMyPlayer().initHandCard(myCardList.toArray(new Card[myCardList.size()]));
+                cardNum += myCardCount;
+                main.addMsg(main.getMyHand().displayAllHandCardStr());
+                main.getMyPlayer().displayTable();
+            } else {
+                cardNum += myCardCount;
             }
-
-            if (0 == i) {
-                plays[i].addHandCard(cards[cardNum++]);
-            }
-
-            main.addMsg(plays[i].displayAllHandCardStr());
-            plays[i].displayTable();
         }
-
     }
 
     private void shuffle() {
