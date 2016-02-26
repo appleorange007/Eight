@@ -17,8 +17,6 @@ import java.awt.image.BufferedImage;
  * 
  */
 public class Card implements Comparable<Card> {
-    private final static int WIDTH = 41;
-    private final static int HEIGHT = 193;
 
     // reference cards pic
     private final Point[] picBitmapLocs = {
@@ -55,10 +53,10 @@ public class Card implements Comparable<Card> {
         this.main = mi;
         this.g = g;
 
-        cardPic = new BufferedImage(WIDTH, HEIGHT, Transparency.BITMASK);
+        cardPic = new BufferedImage(Constant.WIDTH, Constant.HEIGHT, Transparency.BITMASK);
         Graphics tempg = cardPic.getGraphics();
 
-        cardSideWays = new BufferedImage(HEIGHT, WIDTH, Transparency.BITMASK);
+        cardSideWays = new BufferedImage(Constant.HEIGHT, Constant.WIDTH, Transparency.BITMASK);
 
         getCardDetails(cardspic, tempg);
     }

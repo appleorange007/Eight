@@ -11,7 +11,7 @@ import java.util.List;
 public class Hand {
 
     // click detection box for cards in hand
-    Rectangle cardBox[] = new Rectangle[Constant.PLAY_CARD_COUNT + 1];
+    Rectangle cardBox[];
 
     // click detection box for cards on table
     Rectangle tableBox[] = new Rectangle[3];
@@ -55,8 +55,8 @@ public class Hand {
 
         cardBox = new Rectangle[cards.length];
         for (int i = 0; i < cards.length; i++) {
-            int x = 0 + i * Constant.WIDTH;
-            int y = 0;
+            int x = 10 + i * Constant.WIDTH;
+            int y = 20;
             cardBox[i] = new Rectangle(x, y, Constant.WIDTH, Constant.HEIGHT);
         }
 
@@ -79,5 +79,13 @@ public class Hand {
     }
 
     public void showHand() {
+        displayAllHandCardStr();
+
+        for (int i = 0; i < handCards.size(); i++) {
+            Card card = handCards.get(i);
+            // System.out.println(cardBox[i].getX());
+            card.drawCard((int) cardBox[i].getX(), (int) cardBox[i].getY());
+        }
+
     }
 }

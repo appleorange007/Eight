@@ -104,6 +104,9 @@ public class MainInterface extends JFrame implements ActionListener, MouseMotion
         g.drawLine(0, 450, 450, 450);
         screenSize = toolkit.getScreenSize();
 
+        // ToDo: card not display
+        g.drawImage(cardsPic, 0, 0, this);
+
         imageI = new ImageIcon(offscreen);
         image = new JLabel(imageI);
 

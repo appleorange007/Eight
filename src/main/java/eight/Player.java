@@ -39,7 +39,7 @@ public class Player {
         g.setColor(Color.black);
         g.fillRect(0, 0, 450, 550);
         g.setColor(Color.white);
-        g.drawLine(0, 450, 450, 450);
+        g.drawLine(0, 450, 440, 450);
         g.setColor(Color.red);
         g.drawRoundRect(355, 5, 90, 40, 15, 15);
         g.setColor(Color.white);
