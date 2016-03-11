@@ -4,7 +4,7 @@ import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 
 public class Message {
-    private int serial;
+    private static int serial;
     private Action action;
     private int pos;
     private int[] cardNumbers;
@@ -23,13 +23,12 @@ public class Message {
         this.cardNumbers = cardNumbers;
     }
 
-    public void setSerial(int serial) {
-        this.serial = serial;
+    public void setSerial(int num) {
+        serial = num;
     }
 
-    public int incSerial() {
-        this.serial++;
-        return this.serial;
+    public void incSerial() {
+        serial++;
     }
 
     public Action getAction() {
@@ -57,11 +56,11 @@ public class Message {
     }
 
     public boolean isValid() {
-        return this.serial >= 0;
+        return serial >= 0;
     }
 
     public void clear() {
-        this.serial = -1;
+        serial = -1;
     }
 
     public String toString() {

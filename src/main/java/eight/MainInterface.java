@@ -12,14 +12,19 @@ import java.awt.Toolkit;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.KeyEvent;
+import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
 import java.awt.event.MouseMotionListener;
 import java.awt.event.WindowEvent;
 import java.awt.event.WindowListener;
 import java.awt.image.BufferedImage;
+import java.util.Date;
+import java.util.Timer;
+import java.util.TimerTask;
 
 import javax.swing.ImageIcon;
+import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JMenu;
@@ -47,6 +52,9 @@ public class MainInterface extends JFrame implements ActionListener, MouseMotion
     ImageIcon imageI;
     JLabel image;
     JPanel panel;
+
+    JPanel imageP;
+
     JTextArea msg;
     JMenuItem menuItem;
     JMenu menu;
@@ -96,7 +104,7 @@ public class MainInterface extends JFrame implements ActionListener, MouseMotion
 
         }
 
-        offscreen = new BufferedImage(450, 550, BufferedImage.TYPE_3BYTE_BGR);
+        offscreen = new BufferedImage(1150, 550, BufferedImage.TYPE_3BYTE_BGR);
         g = offscreen.getGraphics();
 
         g.drawImage(title, 30, 120, this);
@@ -151,14 +159,38 @@ public class MainInterface extends JFrame implements ActionListener, MouseMotion
 
         menuBar.add(menu);
 
+        JButton redBut = new JButton("Go");
+        redBut.addActionListener(this);
+
+        JButton blueBut = new JButton("Peng");
+        blueBut.addActionListener(this);
+
+        JButton whiteBut = new JButton("Chi");
+        whiteBut.addActionListener(this);
+        whiteBut.setEnabled(false);
+
+        // redBut.setBounds(40, 40, 20, 20);
+        // redBut.setVisible(true);
+        // panel.add(redBut, c);
+
         panel.add(menuBar, c);
         c.gridy = 1;
-        panel.add(image, c);
 
+        imageP = new JPanel();
+        imageP.add(image);
+        imageP.add(redBut);
+        imageP.add(blueBut);
+        imageP.add(whiteBut);
+
+        panel.add(imageP, c);
+        // panel.add(image, c);
+        // panel.add(redBut);
         c.gridy = 2;
         panel.add(scrollPane, c);
         c.gridy = 3;
         panel.add(input, c);
+        // c.gridy = 2;
+        this.addMouseListener(new MyMouseListener());
 
         addMsg("Detected Screen Size: " + screenSize.width + "x" + screenSize.height);
 
@@ -242,7 +274,22 @@ public class MainInterface extends JFrame implements ActionListener, MouseMotion
 
     public void mouseClicked(MouseEvent arg0) {
         // TODO Auto-generated method stub
+        if (arg0.getClickCount() >= 2) {
+            // double clicked
+            System.out.println("ui:" + arg0.getClickCount());
+            System.out.println("drop card!");
 
+            if (myTurn) {
+                int selection = hand.mouseClick(mouseX, mouseY);
+                // if (dealer != null && selection != -1)
+                // dealer.cardSelection(selection);
+
+                if (hand != null && selection != -1)
+                    hand.mouseDoubleClick(selection);
+            }
+        } else {
+            // clicked
+        }
     }
 
     public void mouseEntered(MouseEvent arg0) {
@@ -338,6 +385,53 @@ public class MainInterface extends JFrame implements ActionListener, MouseMotion
 
             input.setText("");
         }
+    }
+
+    public static class MyMouseListener extends MouseAdapter {
+        private static boolean flag = false;
+
+        private static int clickNum = 0;
+
+        @Override
+        public void mouseClicked(MouseEvent e) {
+            MyMouseListener.flag = false;
+            System.out.println(clickNum);
+            if (MyMouseListener.clickNum == 1) {
+                System.out.println("execute doutlbe click event");
+                MyMouseListener.clickNum = 0;
+                MyMouseListener.flag = true;
+                return;
+            }
+
+            Timer timer = new Timer();
+
+            timer.schedule(new TimerTask() {
+                private int n = 0;
+
+                //
+                @Override
+                public void run() {
+                    if (MyMouseListener.flag) {
+                        MyMouseListener.clickNum = 0;
+                        this.cancel();
+                        return;
+                    }
+                    if (n == 1) {
+                        System.out.println("double clicked");
+                        MyMouseListener.flag = true;
+                        MyMouseListener.clickNum = 0;
+                        n = 0;
+                        this.cancel();
+                        return;
+                    }
+                    clickNum++;
+                    n++;
+                    System.out.println("" + n);
+                    System.out.println(clickNum);
+                }
+            }, new Date(), 200);
+        }
+
     }
 
     public void repaint()

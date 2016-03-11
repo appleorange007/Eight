@@ -18,7 +18,7 @@ public class Hand {
 
     private List<Card> handCards;
     private List<Card[]> frontCards;
-    private List<Card> abandonCards;
+    private List<Card> dropCards;
 
     MainInterface main;
     Image back;
@@ -41,6 +41,27 @@ public class Hand {
             if (cardBox[n].contains(mouseX, mouseY)) {
                 return n;
             }
+        }
+        return -1;
+    }
+
+    public int mouseDoubleClick(int selection)
+    {
+        // Checking for click hand cards
+        if (selection < handCards.size()) {
+            Card chu = handCards.remove(selection);
+            dropCards.add(chu);
+            showHand();
+
+            Message sendCard = new Message();
+            sendCard.setAction(Action.CARDCHU);
+            sendCard.setIncludeServer(true);
+            sendCard.incSerial();
+            sendCard.setPos(main.getTablePos());
+
+            sendCard.setCardNumbers(new int[] { chu.cardNumber });
+            SendMessage.getInstance().pushAction(sendCard);
+
         }
         return -1;
     }

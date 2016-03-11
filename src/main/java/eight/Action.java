@@ -4,6 +4,7 @@ public enum Action {
     GAMESTARTING,
     GAMEOVER,
     GAMESTARTED,
-    CARDINIT
+    CARDINIT,
+    CARDCHU
 
 };

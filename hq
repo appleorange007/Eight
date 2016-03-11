@@ -1,0 +1,59 @@
+[33mcommit db4f24a0bcf5668ea369046e39429d2f61e11b3d[m
+Author: George Yao <124420294@qq.com>
+Date:   Fri Feb 26 21:04:28 2016 +0800
+
+    update
+
+[33mcommit 043d68eec1eff452433570ba144a38eddd7e0557[m
+Author: George Yao <124420294@qq.com>
+Date:   Tue Feb 23 16:16:54 2016 +0800
+
+    Code.
+
+[33mcommit 737e34965b8175967bb56a46d5bb62ccf22e92e6[m
+Author: George Yao <124420294@qq.com>
+Date:   Thu Dec 31 11:15:12 2015 +0800
+
+    set play count to 2 for debug
+
+[33mcommit 5b74c72339cc5a2c4b9eed7413d7a813d6a25edd[m
+Author: George Yao <124420294@qq.com>
+Date:   Fri Dec 4 16:01:07 2015 +0800
+
+    Add position file.
+
+[33mcommit c231f65ec4565bc28d4a4b1eabbc7d087aa8cbaf[m
+Author: George Yao <124420294@qq.com>
+Date:   Wed May 20 22:09:20 2015 +0800
+
+    add logger.
+
+[33mcommit 79eebae45e89750127561b23caa1bde1edc4112c[m
+Author: George Yao <124420294@qq.com>
+Date:   Fri May 15 17:54:52 2015 +0800
+
+    Add class Player
+
+[33mcommit 01a8b68f8e351a967678757614d67978a5a3a756[m
+Author: George Yao <124420294@qq.com>
+Date:   Fri May 15 15:32:16 2015 +0800
+
+    Using card NO instead of Card in class Message
+
+[33mcommit 54c172485692ad0f1a6806681ca22e3656c1f05f[m
+Author: George Yao <124420294@qq.com>
+Date:   Thu May 14 17:49:33 2015 +0800
+
+    Delete redundant file.
+
+[33mcommit 4850af258a4dc22cb8f3f96b3be6464f655af0d3[m
+Author: George Yao <124420294@qq.com>
+Date:   Thu May 14 17:42:31 2015 +0800
+
+    Add Eight code.
+
+[33mcommit 14128f408ca47a7d3597df5a88b97c1ecbbdf918[m
+Author: appleorange007 <124420294@qq.com>
+Date:   Thu May 14 17:10:09 2015 +0800
+
+    Initial commit

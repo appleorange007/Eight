@@ -48,10 +48,15 @@ public class Player {
         g.drawRoundRect(355, 360, 90, 40, 15, 15);
         logger.info("display table 0 ");
         hand.showHand();
+
         main.repaint();
     }
 
     public void cardSelection(int selection) {
+
+    }
+
+    public void dropCard(int selection) {
 
     }
 
