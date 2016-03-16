@@ -84,6 +84,18 @@ public class Hand {
         Collections.sort(handCards);
     }
 
+    public void chu(int cardNo) {
+
+        for (Card card : handCards) {
+            if (card.getNumber() == cardNo) {
+                handCards.remove(card);
+                dropCards.add(card);
+                break;
+            }
+        }
+        showHand();
+    }
+
     public void addCard(Card card) {
         if (null == handCards) {
             handCards = new ArrayList<Card>();

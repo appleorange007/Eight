@@ -44,6 +44,9 @@ public class Dealer {
         case CARDINIT:
             dealInitCard(msg);
             break;
+        case CARDCHU:
+            dealChu(msg);
+            break;
         case GAMEOVER:
             gameOver();
             break;
@@ -94,6 +97,16 @@ public class Dealer {
                 cardNum += myCardCount;
             }
         }
+    }
+
+    private void dealChu(Message msg) {
+        int cardNo = msg.getCardNumbers()[0];
+        int pos = msg.getPos();
+
+        if (main.getTablePos() % Constant.PLAY_COUNT == pos) {
+            main.getMyHand().chu(cardNo);
+        }
+
     }
 
     private void shuffle() {

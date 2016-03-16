@@ -183,14 +183,12 @@ public class MainInterface extends JFrame implements ActionListener, MouseMotion
         imageP.add(whiteBut);
 
         panel.add(imageP, c);
-        // panel.add(image, c);
-        // panel.add(redBut);
         c.gridy = 2;
         panel.add(scrollPane, c);
         c.gridy = 3;
         panel.add(input, c);
         // c.gridy = 2;
-        this.addMouseListener(new MyMouseListener());
+        // this.addMouseListener(new MyMouseListener());
 
         addMsg("Detected Screen Size: " + screenSize.width + "x" + screenSize.height);
 
@@ -249,6 +247,7 @@ public class MainInterface extends JFrame implements ActionListener, MouseMotion
 
     public void windowClosing(WindowEvent arg0) {
         // TODO Auto-generated method stub
+
         System.exit(0);
     }
 
@@ -274,22 +273,16 @@ public class MainInterface extends JFrame implements ActionListener, MouseMotion
 
     public void mouseClicked(MouseEvent arg0) {
         // TODO Auto-generated method stub
-        if (arg0.getClickCount() >= 2) {
-            // double clicked
-            System.out.println("ui:" + arg0.getClickCount());
-            System.out.println("drop card!");
-
-            if (myTurn) {
-                int selection = hand.mouseClick(mouseX, mouseY);
-                // if (dealer != null && selection != -1)
-                // dealer.cardSelection(selection);
-
-                if (hand != null && selection != -1)
-                    hand.mouseDoubleClick(selection);
-            }
-        } else {
-            // clicked
-        }
+        /*
+         * if (arg0.getClickCount() >= 2) { // double clicked System.out.println("ui:" +
+         * arg0.getClickCount()); System.out.println("drop card!");
+         * 
+         * if (myTurn) { int selection = hand.mouseClick(mouseX, mouseY); // if (dealer != null &&
+         * selection != -1) // dealer.cardSelection(selection);
+         * 
+         * if (hand != null && selection != -1) hand.mouseDoubleClick(selection); } } else { //
+         * clicked }
+         */
     }
 
     public void mouseEntered(MouseEvent arg0) {
